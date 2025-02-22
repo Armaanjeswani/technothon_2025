@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recovery Time Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function generateROMFields() {
+            var numWeeks = document.getElementById("num_weeks").value;
+            var romFields = document.getElementById("rom_fields");
+            romFields.innerHTML = ""; // Clear previous fields
+
+            for (var i = 1; i <= numWeeks; i++) {
+                var div = document.createElement("div");
+                div.innerHTML = `<label>Week ${i} ROM:</label> 
+                                 <input type="number" step="0.01" name="week_${i}" required>`;
+                romFields.appendChild(div);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Recovery Time Prediction</h2>
+        <form action="/predict" method="post">
+            <label for="num_weeks">Number of Weeks:</label>
+            <input type="number" id="num_weeks" name="num_weeks" required oninput="generateROMFields()">
+
+            <div id="rom_fields"></div>
+
+            <label for="pain_intensity">Pain Intensity (1-10):</label>
+            <input type="number" name="pain_intensity" step="0.1" required>
+
+            <label for="pain_x">Pain Localization X:</label>
+            <input type="number" name="pain_x" step="0.1" required>
+
+            <label for="pain_y">Pain Localization Y:</label>
+            <input type="number" name="pain_y" step="0.1" required>
+
+            <label for="pain_z">Pain Localization Z:</label>
+            <input type="number" name="pain_z" step="0.1" required>
+
+            <label for="age">Patient Age:</label>
+            <input type="number" name="age" required>
+
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+</body>
+</html>
